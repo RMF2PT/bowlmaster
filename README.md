@@ -1,11 +1,9 @@
-# README #
-
-This README would normally document whatever steps are necessary to get your application up and running.
+# Bowlmaster #
 
 ### What is this repository for? ###
 
-* Quick summary
-* Version
+* This repository is for the game Bowlmaster coded and maintained by me during the course taken on Udemy - Learn to code with Unity
+* Version 0.1
 * [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
 ### How do I get set up? ###
@@ -19,11 +17,11 @@ This README would normally document whatever steps are necessary to get your app
 
 ### Contribution guidelines ###
 
-* Writing tests
-* Code review
-* Other guidelines
+* One-man work
+* No contributions
+* Private
 
 ### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+* Ricardo Ferreira
+* ricardomfferreira@gmail.com
