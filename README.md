@@ -8,7 +8,6 @@
 
 ### How do I get set up? ###
 
-* Summary of set up
 * Configuration: Language C#
 * How to run tests: TDD Test Driven Development with Unity Tests Editor
 * Deployment instructions: Deployed to Android
