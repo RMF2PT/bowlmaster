@@ -1652,8 +1652,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 1365650963}
   - 65: {fileID: 1365650962}
-  - 114: {fileID: 1365650961}
   - 95: {fileID: 1365650964}
+  - 114: {fileID: 1365650961}
   - 114: {fileID: 1365650965}
   m_Layer: 0
   m_Name: PinSetter

@@ -8,12 +8,18 @@ public class PinSetter : MonoBehaviour {
 	public int lastStandingCount = -1;
 	public GameObject pinSet;
 	
-	private bool ballEnteredBox = false;
-	private float lastChangeTime;
 	//private Ball ball;
+	private ActionMaster actionMaster;
+	private Animator animator;
+	private bool ballEnteredBox = false;
+	private int lastSettleCount = 10;
+	private float lastChangeTime;
+	
 	
 	void Start () {
 		//ball = GameObject.FindObjectOfType<Ball>();
+		actionMaster = new ActionMaster();
+		animator = GetComponent<Animator>();
 	}
 	
 	void Update () {
@@ -39,6 +45,25 @@ public class PinSetter : MonoBehaviour {
 	}
 	
 	void PinsHaveSettled () {
+		int standing = CountStanding();
+		int pinFall = lastSettleCount - standing;		
+		lastSettleCount = standing;
+		
+		ActionMaster.Action action = actionMaster.Bowl(pinFall);
+		Debug.Log ("Pinfall: " + pinFall + " " + action);
+		
+		if (action == ActionMaster.Action.Tidy) {
+			animator.SetTrigger("tidyTrigger");
+		} else if (action == ActionMaster.Action.EndTurn) {
+			animator.SetTrigger ("resetTrigger");
+			lastSettleCount = 10;
+		} else if (action == ActionMaster.Action.Reset) {
+			animator.SetTrigger ("resetTrigger");
+			lastSettleCount = 10;
+		} else if (action == ActionMaster.Action.EndGame) {
+			throw new UnityException ("Don't know how to handle end of game yet");;
+		}
+		
 		lastStandingCount = -1; // Indicates pins have settled and ball not in box
 		ballEnteredBox = false;
 		standingDisplay.color = Color.green;
