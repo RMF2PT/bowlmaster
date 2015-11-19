@@ -9,11 +9,9 @@
 ### How do I get set up? ###
 
 * Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+* Configuration: Language C#
+* How to run tests: TDD Test Driven Development with Unity Tests Editor
+* Deployment instructions: Deployed to Android
 
 ### Contribution guidelines ###
 
