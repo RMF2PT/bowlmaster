@@ -15,7 +15,7 @@
 ### Contribution guidelines ###
 
 * One-man work
-* No contributions
+* No external contributions
 * Private
 
 ### Who do I talk to? ###
