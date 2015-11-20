@@ -3,30 +3,33 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class PinSetter : MonoBehaviour {
-
-	public Text standingDisplay;
-	public int lastStandingCount = -1;
 	public GameObject pinSet;
+	public Text standingDisplay;
 	
-	//private Ball ball;
-	private ActionMaster actionMaster;
-	private Animator animator;
-	private bool ballEnteredBox = false;
+	private int lastStandingCount = -1;
 	private int lastSettleCount = 10;
+	private bool ballOutOfPlay = false;
 	private float lastChangeTime;
+	private float clipLenght;
 	
+	private Ball ball;
+	private Animator animator;
+	private ActionMaster actionMaster;
 	
 	void Start () {
-		//ball = GameObject.FindObjectOfType<Ball>();
-		actionMaster = new ActionMaster();
+		ball = GameObject.FindObjectOfType<Ball>();
 		animator = GetComponent<Animator>();
+		actionMaster = new ActionMaster();
 	}
 	
 	void Update () {
 		standingDisplay.text = CountStanding().ToString();
 		
-		if (ballEnteredBox) {
+		if (ballOutOfPlay) {
 			UpdateStandingCountAndSettle();
+			standingDisplay.color = Color.red;
+		} else {
+			standingDisplay.color = Color.green;
 		}
 	}
 	
@@ -38,7 +41,7 @@ public class PinSetter : MonoBehaviour {
 			return;
 		}
 		
-		float settleTime = 3f; // How long to wait to consider pins settled (3 seconds?)
+		float settleTime = 3f; // How long to wait to consider pins settled (3 seconds)
 		if ((Time.time - lastChangeTime) > settleTime) { // If last change happened > settleTime
 			PinsHaveSettled ();
 		}
@@ -61,13 +64,31 @@ public class PinSetter : MonoBehaviour {
 			animator.SetTrigger ("resetTrigger");
 			lastSettleCount = 10;
 		} else if (action == ActionMaster.Action.EndGame) {
-			throw new UnityException ("Don't know how to handle end of game yet");;
+			
+			//  TODO erase this code
+			animator.SetTrigger ("resetTrigger");
+			lastSettleCount = 10;
+			
+			//throw new UnityException ("Don't know how to handle end of game yet");
 		}
 		
 		lastStandingCount = -1; // Indicates pins have settled and ball not in box
-		ballEnteredBox = false;
-		standingDisplay.color = Color.green;
-		//ball.Reset();
+		ballOutOfPlay = false;
+		
+		foreach ( AnimationClip clip in animator.runtimeAnimatorController.animationClips) {
+			if (clip.name == "Swipe") {
+				clipLenght = clip.length;
+			}
+		}
+		Invoke("BallReset", clipLenght);
+	}
+	
+	void BallReset () {
+		ball.Reset();
+	}
+	
+	public void SetBallOutOfPlay () {
+		ballOutOfPlay = true;
 	}
 	
 	int CountStanding () {
@@ -78,16 +99,6 @@ public class PinSetter : MonoBehaviour {
 			}
 		}
 		return standing;
-	}
-	
-	void OnTriggerEnter (Collider collider) {
-		GameObject thingHit = collider.gameObject;
-		
-		// Ball enters play box
-		if (thingHit.GetComponent<Ball>()) {
-			ballEnteredBox = true;
-			standingDisplay.color = Color.red;
-		}
 	}
 	
 	public void RaisePins () {

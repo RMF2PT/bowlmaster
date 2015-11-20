@@ -24,7 +24,6 @@ public class Ball : MonoBehaviour {
 
 		audioSource = GetComponent<AudioSource>();
 		audioSource.Play();
-		Invoke("Reset", (audioSource.clip.length + 3));
 	}
 	
 	public void Reset () {
