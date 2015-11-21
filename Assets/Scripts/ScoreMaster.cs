@@ -6,11 +6,11 @@ public class ScoreMaster {
 
 	public static List<int> ScoreFrames (List<int> roll) {
 		
-		List<int> framesList = new List<int>();
+		List<int> frameList = new List<int>();
 		
 		// code here
 		
-		return framesList;
+		return frameList;
 		
 	}
 }
