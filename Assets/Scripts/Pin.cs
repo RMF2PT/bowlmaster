@@ -46,5 +46,10 @@ public class Pin : MonoBehaviour {
 	
 	public void Lower() {
 		rigidBody.isKinematic = false;
+		Invoke("CorretPinRotation", 1);
+	}
+	
+	void CorretPinRotation () {
+		transform.rotation = Quaternion.Euler (0, 0, 0);
 	}
 }

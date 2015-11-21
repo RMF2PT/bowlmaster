@@ -5,6 +5,7 @@ using System.Collections;
 public class PinSetter : MonoBehaviour {
 	public GameObject pinSet;
 	public Text standingDisplay;
+	public bool swiperIsMoving = false;
 	
 	private int lastStandingCount = -1;
 	private int lastSettleCount = 10;
@@ -65,7 +66,7 @@ public class PinSetter : MonoBehaviour {
 			lastSettleCount = 10;
 		} else if (action == ActionMaster.Action.EndGame) {
 			
-			//  TODO erase this code
+			//  TODO erase this code when end of game is coded
 			animator.SetTrigger ("resetTrigger");
 			lastSettleCount = 10;
 			
@@ -85,6 +86,14 @@ public class PinSetter : MonoBehaviour {
 	
 	void BallReset () {
 		ball.Reset();
+	}
+	
+	public void SetSwiperMovingFalse () {
+		swiperIsMoving = false;
+	}
+	
+	public void SetSwiperMovingTrue () {
+		swiperIsMoving = true;
 	}
 	
 	public void SetBallOutOfPlay () {
