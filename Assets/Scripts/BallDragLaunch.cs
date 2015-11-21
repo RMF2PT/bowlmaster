@@ -47,6 +47,7 @@ public class BallDragLaunch : MonoBehaviour {
 			float launchSpeedZ = (dragEnd.y - dragStart.y) / dragDuration;
 			
 			if (launchSpeedZ < 0) {							// Avoids backwards launchs
+				ball.inPlay = true;
 				Invoke("ResetBallWithExample", 1);
 			} else if (launchSpeedZ >= launchSpeedLimit) { 	// Limits the ball speed
 				launchSpeedZ = launchSpeedLimit;
