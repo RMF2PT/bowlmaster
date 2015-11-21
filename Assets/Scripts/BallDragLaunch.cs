@@ -47,7 +47,7 @@ public class BallDragLaunch : MonoBehaviour {
 			float launchSpeedZ = (dragEnd.y - dragStart.y) / dragDuration;
 			
 			if (launchSpeedZ < 0) {							// Avoids backwards launchs
-				ball.ResetWithExample();
+				Invoke("ResetBallWithExample", 1);
 			} else if (launchSpeedZ >= launchSpeedLimit) { 	// Limits the ball speed
 				launchSpeedZ = launchSpeedLimit;
 				Vector3 launchVelocity = new Vector3 (launchSpeedX, 0, launchSpeedZ);
@@ -63,6 +63,10 @@ public class BallDragLaunch : MonoBehaviour {
 		if (!ball.inPlay && !pinSetter.swiperIsMoving) {
 			ball.Launch(new Vector3(3, 0, 750));
 		}
+	}
+	
+	void ResetBallWithExample () {
+		ball.ResetWithExample();
 	}
 	
 }

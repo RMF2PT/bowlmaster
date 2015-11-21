@@ -11,6 +11,7 @@ public class LaneBox : MonoBehaviour {
 		// Ball exits lane box
 		if (thingLeft.GetComponent<Ball>()) {
 			pinSetter = GameObject.FindObjectOfType<PinSetter>();
+			pinSetter.SetSwiperMovingTrue();
 			pinSetter.SetBallOutOfPlay();
 		}
 	}

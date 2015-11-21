@@ -5,7 +5,7 @@ using System.Collections;
 public class PinSetter : MonoBehaviour {
 	public GameObject pinSet;
 	public Text standingDisplay;
-	public bool swiperIsMoving = false;
+	public bool swiperIsMoving;
 	
 	private int lastStandingCount = -1;
 	private int lastSettleCount = 10;
@@ -18,6 +18,7 @@ public class PinSetter : MonoBehaviour {
 	private ActionMaster actionMaster;
 	
 	void Start () {
+		swiperIsMoving = false;
 		ball = GameObject.FindObjectOfType<Ball>();
 		animator = GetComponent<Animator>();
 		actionMaster = new ActionMaster();
