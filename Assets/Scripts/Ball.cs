@@ -11,13 +11,17 @@ public class Ball : MonoBehaviour {
 	private Rigidbody rigidBody;
 	private AudioSource audioSource;
 	private Vector3 startPos;
-	private FingerExample fingerExample;
+	public FingerExample fingerExample;
+	
+	void Awake () {
+		fingerExample = (FingerExample) FindObjectOfType (typeof(FingerExample));
+	}
 	
 	void Start () {
 		rigidBody = GetComponent<Rigidbody>();
 		rigidBody.useGravity = false;
 		startPos = transform.position;
-		fingerExample = FindObjectOfType<FingerExample>();
+		Debug.Log (fingerExample);
 	}
 	
 	public void Launch (Vector3 velocity) {
