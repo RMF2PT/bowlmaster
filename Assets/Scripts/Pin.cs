@@ -41,6 +41,7 @@ public class Pin : MonoBehaviour {
 		if (IsStanding()) {
 			transform.Translate (new Vector3 (0, distanceToRaise, 0), Space.World);
 			rigidBody.isKinematic = true;
+			CorretPinRotation();
 		}
 	}
 	

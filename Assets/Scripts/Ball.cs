@@ -21,7 +21,6 @@ public class Ball : MonoBehaviour {
 		rigidBody = GetComponent<Rigidbody>();
 		rigidBody.useGravity = false;
 		startPos = transform.position;
-		Debug.Log (fingerExample);
 	}
 	
 	public void Launch (Vector3 velocity) {
@@ -55,6 +54,4 @@ public class Ball : MonoBehaviour {
 		fingerExample.LaunchFingerAnimation();
 		StartBallPosition ();
 	}
-	
-	
 }
