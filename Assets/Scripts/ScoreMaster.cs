@@ -23,31 +23,42 @@ public class ScoreMaster {
 	public static List<int> ScoreFrames (List<int> rolls) {
 		
 		List<int> frameList = new List<int>();
-		int totalOfRolls = 0;
-		totalOfRolls = rolls.Count;
-		
+		int totalOfRolls = rolls.Count;
 		int rollNum = 0;
 		int total = 0;
-		
-		if (totalOfRolls % 2 == 0) {
-			foreach (int roll in rolls) {
+		int spareTotal = 0;
+
+		foreach (int roll in rolls) {
+			rollNum++;
+			if (roll == 10) {
 				rollNum++;
-				total += roll;
-				if (rollNum % 2 == 0 && rollNum < totalOfRolls) {
+			}
+			total += roll;
+			if (spareTotal > 0) {
+				spareTotal += total;
+				frameList.Add (spareTotal);
+				spareTotal = 0;
+			}
+			if (rollNum % 2 == 0 && rollNum < totalOfRolls) {
+				if (total == 10) {
+					spareTotal += total;
+					total = 0;
+				} else {
 					frameList.Add (total);
 					total = 0;
 				}
 			}
-			frameList.Add (total);
-		} else {
-			foreach (int roll in rolls.GetRange(0, (totalOfRolls-1))) {
-				rollNum++;
-				total += roll;
-			}
-			frameList.Add (total);
+		}
+		
+		// End of frame
+		if (totalOfRolls % 2 == 0 && total < 10) {
+				frameList.Add (total);
 		}
 		
 		return frameList;
 	}
 	
+	// TODO TDD really works. At first I create very ugly and messy code, and when it all starts working green,
+	// I sculpt it into a clean and beautiful code. I didn't knew about TDD until I heard it here in the course.
+	// I'm a huge fan now.
 }
