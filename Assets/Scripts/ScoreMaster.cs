@@ -32,7 +32,18 @@ public class ScoreMaster {
 		
 		foreach (int roll in rolls) {
 			rollNum++;
-			
+
+			if (rollNum > 21) {
+				if (strikeTotal > 0) {
+					strikeTotal += roll;
+					frameList.Add (strikeTotal);
+				} else {
+					spareTotal += roll;
+					frameList.Add (spareTotal);
+				}
+				continue;
+			}
+
 			if (roll == 10) {
 				rollNum++;
 				isStrike = true;
@@ -51,7 +62,7 @@ public class ScoreMaster {
 				}
 			}
 			
-			if (spareTotal > 0) {
+			if (spareTotal > 0 && !isStrike) {
 				spareTotal += roll;
 				frameList.Add (spareTotal);
 				spareTotal = 0;
@@ -76,11 +87,6 @@ public class ScoreMaster {
 				}
 			}
 		} 
-		
 		return frameList;
 	}
-	
-	// TODO TDD really works. At first I create very ugly and messy code, and when it all starts working green,
-	// I sculpt it into a clean and beautiful code. I didn't knew about TDD until I heard it here in the course.
-	// I'm a huge fan now.
 }
