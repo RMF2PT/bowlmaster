@@ -16,43 +16,29 @@ public class ScoreMaster {
 		}
 		return cumulativeScores;
 	}
-	
-	// TODO Ben's solution has 18 lines...
-	
+
 	// Returns a list of individual frame scores, NOT cumulative
 	public static List<int> ScoreFrames (List<int> rolls) {
 		List<int> frameList = new List<int>();
 				
-		for (int bowl = 0; bowl < rolls.Count; bowl += 2) {
-			// test if the frame is completed, we have a second roll
-			if (bowl != rolls.Count -1) {
-				int frame;
-				int firstBowl = rolls[bowl];
-				int secondBowl = rolls[bowl + 1];
+		for (int i = 0; i < rolls.Count; i += 2) { 			// Iterates in 2 because frame has 2 bowls
+			if (frameList.Count == 10) {break;}				// If last frame, break out
 
-				if (firstBowl == 10) { // Strike
-					// "second" is from next frame here (first bonus from the strike), 
-					// can only add if i+2 already exists, because this is the 2nd bonus from the strike
-					if (bowl + 2 < rolls.Count) {
-						frame = firstBowl + secondBowl + rolls[bowl + 2];
-						frameList.Add (frame);
+			if (i != rolls.Count -1) {						// Test if the frame is completed, we have a second roll
+				int firstBowl = rolls[i];
+				int secondBowl = rolls[i + 1];
 
-						// If last frame, break out
-						if (frameList.Count == 10) {
-							break;
-						} else {
-							bowl--; // because only one roll was made for a strike
-						}
+				if (firstBowl == 10) { 						// Strike
+					if (i + 2 < rolls.Count) {				// can only add if i+2 already exists,
+						frameList.Add (firstBowl + secondBowl + rolls[i + 2]);
+						i--; 								// Because a strike frame has just one bowl
 					}
-				} else if (firstBowl + secondBowl == 10) { // Spare
-					// can only add if i+2 already exists, because this is the bonus for the spare
-					if (bowl + 2 < rolls.Count) {
-						frame = 10 + rolls[bowl + 2];
-						frameList.Add (frame);
+				} else if (firstBowl + secondBowl == 10) { 	// Spare
+					if (i + 2 < rolls.Count) {				// can only add if i+2 already exists
+						frameList.Add (firstBowl + secondBowl + rolls[i + 2]);
 					}
-				} else {
-					frame = firstBowl + secondBowl;
-					frameList.Add (frame);
+				} else { 									// Open frane
+					frameList.Add (firstBowl + secondBowl);
 				}
 			}
 		} 
