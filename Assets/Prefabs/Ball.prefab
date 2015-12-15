@@ -175,7 +175,7 @@ MonoBehaviour:
   launchVelocity: {x: 0, y: 0, z: 0}
   velocityLowerLimit: 300
   inPlay: 0
-  fingerExample: {fileID: 11463052, guid: 7e631eee2dfe14a8bb4b8cab517850ac, type: 2}
+  fingerExample: {fileID: 11439802, guid: 5a5667b5991504b1fbe45853128f5897, type: 2}
 --- !u!135 &13559824
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -227,7 +227,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: fingerExample
       value: 
-      objectReference: {fileID: 11463052, guid: 7e631eee2dfe14a8bb4b8cab517850ac,
+      objectReference: {fileID: 11439802, guid: 5a5667b5991504b1fbe45853128f5897,
         type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
