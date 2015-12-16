@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour {
 
 		try {
 			scoreDisplay.FillRollCard (bowls);
+			scoreDisplay.FillFrames (ScoreMaster.ScoreCumulative(bowls));
 		} catch {
 			Debug.LogWarning ("Something went wrong in scoredisplay.cs");
 		}
