@@ -7,17 +7,29 @@ public class GameManager : MonoBehaviour {
 	
 	private PinSetter pinSetter;
 	private Ball ball;
+	private ScoreDisplay scoreDisplay;
 	
 	void Start () {
 		pinSetter = GameObject.FindObjectOfType<PinSetter> ();
 		ball = GameObject.FindObjectOfType<Ball> ();
+		scoreDisplay = GameObject.FindObjectOfType<ScoreDisplay>();
 	}
 	
 	public void Bowl (int pinFall) {
-		bowls.Add (pinFall);
-		
-		ActionMaster.Action nextAction = ActionMaster.NextAction (bowls);
-		pinSetter.PerfomAction (nextAction);
-		ball.Reset ();
+		try {
+			bowls.Add (pinFall);
+			ball.Reset ();
+
+			pinSetter.PerfomAction (ActionMaster.NextAction (bowls));
+		} catch {
+			Debug.LogWarning ("Something went wrong");
+		}
+
+		try {
+			scoreDisplay.FillRollCard (bowls);
+		} catch {
+			Debug.LogWarning ("Something went wrong in scoredisplay.cs");
+		}
+
 	}
 }
