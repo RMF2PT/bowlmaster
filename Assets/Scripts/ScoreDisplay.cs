@@ -7,7 +7,7 @@ public class ScoreDisplay : MonoBehaviour {
 
 	public Text[] rollTexts, frameTexts;
 
-	public void FillRollCard (List<int> rolls) {
+	public void FillRolls (List<int> rolls) {
 		string scoresString = FormatRolls(rolls);
 		for (int i = 0; i < scoresString.Length; i++) {
 			rollTexts[i].text = scoresString[i].ToString();
@@ -23,20 +23,22 @@ public class ScoreDisplay : MonoBehaviour {
 	public static string FormatRolls (List<int> rolls) {		// This is our testable static helper method
 		string output = "";
 
-		// my code here
+		for (int i = 0; i < rolls.Count; i++) {
+			int rollBox = output.Length + 1; 								// rollBox starts at 1
+
+			if (rolls[i] == 0) {											// 0 is shown as "-"
+				output += "-";
+			} else if ((rollBox % 2 == 0 || rollBox == 21) && rolls[i-1] + rolls[i] == 10) {	// SPARE
+				output += "/";
+			} else if (rolls[i] == 10 && rollBox < 18) {					// STRIKE before last frame
+				output += "X ";
+			} else if (rolls[i] == 10) {									// STRIKE in last frame
+				output += "X";
+			}  else {
+				output += rolls[i].ToString();
+			}
+		}
 
 		return output;
-	}
-
-
-	// TODO erase this method
-	void InitializeScoresTexts () {
-		for (int i = 0; i < 21; i++) {
-			rollTexts[i].text = "10";
-		}
-		
-		for (int i = 0; i < 10; i++) {
-			frameTexts[i].text = "300";
-		}
 	}
 }

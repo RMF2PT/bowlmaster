@@ -22,14 +22,14 @@ public class GameManager : MonoBehaviour {
 
 			pinSetter.PerfomAction (ActionMaster.NextAction (bowls));
 		} catch {
-			Debug.LogWarning ("Something went wrong");
+			Debug.LogWarning ("Something went wrong in Bowl()");
 		}
 
 		try {
-			scoreDisplay.FillRollCard (bowls);
+			scoreDisplay.FillRolls (bowls);
 			scoreDisplay.FillFrames (ScoreMaster.ScoreCumulative(bowls));
 		} catch {
-			Debug.LogWarning ("Something went wrong in scoredisplay.cs");
+			Debug.LogWarning ("FillRollCard or FillFrames failed");
 		}
 
 	}
