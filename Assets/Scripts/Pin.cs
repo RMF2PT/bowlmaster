@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Pin : MonoBehaviour {
 
-	public float standingTreshold = 5f;
+	public float standingTreshold = 3f;
 	public float distanceToRaise = 40f;
 	
 	private AudioSource audioSource;
@@ -20,6 +20,7 @@ public class Pin : MonoBehaviour {
 	
 	public bool IsStanding () {
 		Vector3 rotationInEuler = transform.rotation.eulerAngles;
+
 		// Pins start with 0, but rest at x = 359.977, y = 0.008905 and z = 0.01333
 		float tiltInX;
 		if (transform.rotation.eulerAngles.x > 359f) {
@@ -27,8 +28,8 @@ public class Pin : MonoBehaviour {
 		} else {
 			tiltInX = Mathf.Abs(0f - rotationInEuler.x);
 		}
+
 		float tiltInZ = Mathf.Abs(0f - rotationInEuler.z);
-		
 		if (tiltInX < standingTreshold && tiltInZ < standingTreshold) {
 			return true;
 		} else {
@@ -39,13 +40,14 @@ public class Pin : MonoBehaviour {
 	public void RaiseIfStanding() {
 		// Raise standing pins only by distanceToRaise
 		if (IsStanding()) {
+			rigidBody.useGravity = false;
+			CorretPinRotation();
 			transform.Translate (new Vector3 (0, distanceToRaise, 0), Space.World);
-			rigidBody.isKinematic = true;
 		}
 	}
-	
+
 	public void Lower() {
-		rigidBody.isKinematic = false;
+		rigidBody.useGravity = true;
 		Invoke("CorretPinRotation", 1);
 	}
 	

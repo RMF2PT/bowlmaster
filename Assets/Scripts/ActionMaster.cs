@@ -1,59 +1,41 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class ActionMaster {
+public static class ActionMaster {
+	public enum Action {Tidy, Reset, EndTurn, EndGame, Undefined};
 	
-	public enum Action {Reset, Tidy, EndTurn, EndGame};
-	
-	private int[] bowlScore = new int[22];
-	private int bowl = 1;
-	
-	public Action Bowl (int pins) {
-		if (pins < 0 || pins > 10) {
-			Debug.LogWarning (pins);
-			throw new UnityException ("Invalid pins count");
-		}
+	public static Action NextAction (List<int> rolls) {
+		Action nextAction = Action.Undefined;
 		
-		bowlScore[bowl] = pins;
-		
-		// Last Frame
-		if (bowl == 21) {
-			return Action.EndGame;
-		}
-		
-		if (bowl == 20) {
-		 	if (bowlScore[19] == 10 && bowlScore[20] < 10) {	// Strike at bowl 19 and not strike at bowl 20
-				bowl++;
-				return Action.Tidy;
-			}  else if ((bowlScore[19] + bowlScore[20]) == 10 || bowlScore[20] == 10) {	// Spare or strike at bowl 20
-				bowl++;
-				return Action.Reset;
-			}  else {
-				return Action.EndGame;
+		for (int i = 0; i < rolls.Count; i++) { // Step through rolls
+			
+			if (i == 20) {
+				nextAction = Action.EndGame;
+			} else if ( i >= 18 && rolls[i] == 10 ){ // Handle last-frame special cases
+				nextAction = Action.Reset;
+			} else if ( i == 19 ) {
+				if (rolls[18]==10 && rolls[19]==0) {
+					nextAction = Action.Tidy;
+				} else if (rolls[18] + rolls[19] == 10) {
+					nextAction = Action.Reset;
+				} else if (rolls [18] + rolls[19] >= 10) {  // Roll 21 awarded
+					nextAction = Action.Tidy;
+				} else {
+					nextAction = Action.EndGame;
+				}
+			} else if (i % 2 == 0) { // First bowl of frame
+				if (rolls[i] == 10) {
+					rolls.Insert (i, 0); // Insert virtual 0 after strike
+					nextAction = Action.EndTurn;
+				} else {
+					nextAction = Action.Tidy;
+				}
+			} else { // Second bowl of frame
+				nextAction = Action.EndTurn;
 			}
 		}
 		
-		if (bowl == 19 && bowlScore[19] == 10) {		// Strike at bowl 19
-			bowl++;
-			return Action.Reset;
-		}
-		
-		// First Bowl of frames
-		if (bowl % 2 != 0) { 
-			if (pins == 10) {
-				bowl += 2;
-				return Action.EndTurn;
-			} else {
-				bowl++;
-				return Action.Tidy;
-			}
-		// Second Bowl of frames	
-		}  else if (bowl % 2 == 0) { 
-			bowl++;
-			return Action.EndTurn;
-		}
-		
-		throw new UnityException ("Not sure what action to return");
+		return nextAction;
 	}
 }
-

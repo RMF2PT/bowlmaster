@@ -8,11 +8,11 @@ public class BallDragLaunch : MonoBehaviour {
 	private Vector3 dragStart, dragEnd;
 	private float startTime, endTime;
 	private float launchSpeedLimit = 1000f;
-	private PinSetter pinSetter;
+	private PinCounter pinCounter;
 	
 	void Start () {
 		ball = GetComponent<Ball>();
-		pinSetter = FindObjectOfType<PinSetter>();
+		pinCounter = FindObjectOfType<PinCounter>();
 	}
 	
 	public void MoveRightAtStart (float xNudge) {
@@ -29,7 +29,7 @@ public class BallDragLaunch : MonoBehaviour {
 	
 	public void DragStart () {
 		// Capture time & position of the drag start
-		if (!ball.inPlay && !pinSetter.swiperIsMoving) {
+		if (!ball.inPlay && !pinCounter.swiperIsMoving) {
 			startTime = Time.time;
 			dragStart = Input.mousePosition;
 		}
@@ -37,7 +37,7 @@ public class BallDragLaunch : MonoBehaviour {
 	
 	public void DragEnd () {
 		// Launch the ball
-		if (!ball.inPlay && !pinSetter.swiperIsMoving) {
+		if (!ball.inPlay && !pinCounter.swiperIsMoving) {
 			endTime = Time.time;
 			dragEnd = Input.mousePosition;
 			
@@ -47,7 +47,8 @@ public class BallDragLaunch : MonoBehaviour {
 			float launchSpeedZ = (dragEnd.y - dragStart.y) / dragDuration;
 			
 			if (launchSpeedZ < 0) {							// Avoids backwards launchs
-				ball.ResetWithExample();
+				ball.inPlay = true;
+				Invoke("ResetBallWithExample", 1);
 			} else if (launchSpeedZ >= launchSpeedLimit) { 	// Limits the ball speed
 				launchSpeedZ = launchSpeedLimit;
 				Vector3 launchVelocity = new Vector3 (launchSpeedX, 0, launchSpeedZ);
@@ -60,9 +61,13 @@ public class BallDragLaunch : MonoBehaviour {
 	}
 	
 	public void TestLaunch () {
-		if (!ball.inPlay && !pinSetter.swiperIsMoving) {
+		if (!ball.inPlay && !pinCounter.swiperIsMoving) {
 			ball.Launch(new Vector3(3, 0, 750));
 		}
+	}
+	
+	void ResetBallWithExample () {
+		ball.ResetWithExample();
 	}
 	
 }
