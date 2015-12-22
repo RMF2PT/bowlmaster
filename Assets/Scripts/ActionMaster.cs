@@ -26,7 +26,8 @@ public static class ActionMaster {
 				}
 			} else if (i % 2 == 0) { // First bowl of frame
 				if (rolls[i] == 10) {
-					rolls.Insert (i, 0); // Insert virtual 0 after strike
+					// Don't need this with my code
+					//rolls.Insert (i, 0); // Insert virtual 0 after strike
 					nextAction = Action.EndTurn;
 				} else {
 					nextAction = Action.Tidy;
