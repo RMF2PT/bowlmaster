@@ -64,7 +64,7 @@ public class ActionMasterTest {
 		Assert.AreEqual(reset, ActionMaster.NextAction(rolls.ToList()));
 	}
 	
-	[Test]
+	[Test] // This test doesn't makes sense - Can't get to b21 with 1 and 1 in b19 & b20 - see Test14
 	public void T08Bowl21ReturnsEndGame () {
 		int[] rolls = {1,1 , 1,1 , 1,1 , 1,1 , 1,1 , 1,1 , 1,1 , 1,1 , 1,1 , 1,1 , 1};
 		Assert.AreEqual(endGame, ActionMaster.NextAction(rolls.ToList()));
@@ -98,5 +98,11 @@ public class ActionMasterTest {
 	public void T13Bowl6Then4ThenStrikeReturnsEndTurn () {
 		int[] rolls = {6,4 , 10};
 		Assert.AreEqual(endTurn, ActionMaster.NextAction(rolls.ToList()));
+	}
+
+	[Test]
+	public void T14Bowl10InBowls17And1And1InBowl19And20ReturnsEndGame () {
+		int[] rolls = {1,1 , 1,1 , 1,1 , 1,1 , 1,1 , 1,1 , 1,1 , 1,1 , 10, 1,1};
+		Assert.AreEqual(endGame, ActionMaster.NextAction(rolls.ToList()));
 	}
 }

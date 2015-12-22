@@ -42,10 +42,11 @@ public class PinSetter : MonoBehaviour {
 			pinCounter.Reset();
 		} else if (action == ActionMaster.Action.EndGame) {
 			
+			Debug.Log ("END OF GAME!");
+
 			//  TODO erase this code when end of game is coded
 			animator.SetTrigger ("resetTrigger");
 			pinCounter.Reset();
-			
 			//throw new UnityException ("Don't know how to handle end of game yet");
 		}
 	}
