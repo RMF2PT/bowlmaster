@@ -1,13 +1,22 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
+	public Button newGameButton;
+
 	private List<int> bowls = new List<int>();
 	
 	private PinSetter pinSetter;
 	private Ball ball;
 	private ScoreDisplay scoreDisplay;
+	private GameOverText gameOverText;
+
+	void Awake () {
+		gameOverText = (GameOverText) FindObjectOfType (typeof(GameOverText));
+		newGameButton.interactable = false;
+	}
 	
 	void Start () {
 		pinSetter = GameObject.FindObjectOfType<PinSetter> ();
@@ -31,5 +40,21 @@ public class GameManager : MonoBehaviour {
 			Debug.LogWarning ("FillRollCard or FillFrames failed");
 		}
 
+		try {
+			if (pinSetter.EndOfGame) {
+				gameOverText.Activate();
+				newGameButton.interactable = true;
+			}
+		} catch {
+			Debug.LogWarning ("Couldn't find GameOverText or NewGameButton!");
+		}
+	}
+
+	public void NewGame () {
+		try {
+			gameOverText.Inactivate();
+		} catch {
+			Debug.LogWarning ("Couldn't start new game!");
+		}
 	}
 }

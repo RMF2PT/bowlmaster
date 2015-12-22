@@ -4,10 +4,11 @@ using System.Collections;
 
 public class PinSetter : MonoBehaviour {
 	public GameObject pinSet;
+	public bool EndOfGame = false;
 	
 	private Animator animator;
 	private PinCounter pinCounter;
-	
+
 	private float clipLenght;
 	
 	void Start () {
@@ -43,10 +44,12 @@ public class PinSetter : MonoBehaviour {
 		} else if (action == ActionMaster.Action.EndGame) {
 			
 			Debug.Log ("END OF GAME!");
+			EndOfGame = true;
 
-			//  TODO erase this code when end of game is coded
 			animator.SetTrigger ("resetTrigger");
 			pinCounter.Reset();
+
+			//  TODO erase this code when end of game is coded
 			//throw new UnityException ("Don't know how to handle end of game yet");
 		}
 	}
